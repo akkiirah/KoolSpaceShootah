@@ -10,6 +10,7 @@ namespace MonoGameDesktopDX
 {
     public class Game1 : Game
     {
+        // Variables
         GraphicsDeviceManager graphicsManager;
         SpriteBatch spriteBatch;
 
