@@ -1,13 +1,13 @@
 ﻿using System;
 
-namespace MonoGameDesktopDX
+namespace KoolSpaceShootah
 {
     public static class Program
     {
         [STAThread]
         static void Main()
         {
-            Game1 game = new Game1();
+            SpaceShootahGame game = new SpaceShootahGame();
             game.Run();
         }
     }

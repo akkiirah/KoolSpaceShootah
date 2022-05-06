@@ -6,15 +6,15 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Content;
 
-namespace MonoGameDesktopDX
+namespace KoolSpaceShootah
 {
-    public class Game1 : Game
+    public class SpaceShootahGame : Game
     {
         // Variables
         GraphicsDeviceManager graphicsManager;
         SpriteBatch spriteBatch;
 
-        public Game1()
+        public SpaceShootahGame()
         {
             graphicsManager = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
