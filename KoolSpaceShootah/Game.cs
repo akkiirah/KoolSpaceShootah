@@ -14,6 +14,11 @@ namespace KoolSpaceShootah
         GraphicsDeviceManager graphicsManager;
         SpriteBatch spriteBatch;
 
+        // Player
+        Player player;
+
+        Texture2D playerSprite;
+
         public SpaceShootahGame()
         {
             graphicsManager = new GraphicsDeviceManager(this);
@@ -27,7 +32,8 @@ namespace KoolSpaceShootah
         // Initialization logic
         protected override void Initialize()
         {
-            Player p = new Player();
+            player = new Player(AbstractEntity.User.Player);
+            player.Initialize();
             base.Initialize();
         }
 
@@ -35,6 +41,8 @@ namespace KoolSpaceShootah
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            playerSprite = Content.Load<Texture2D>("player");
+            player.LoadSprite(playerSprite);
         }
 
         // Unload content
@@ -56,14 +64,12 @@ namespace KoolSpaceShootah
 
         protected override void Draw(GameTime time)
         {
-            GraphicsDevice.Clear(Color.Black);
-
+            GraphicsDevice.Clear(Color.DarkGray);
             spriteBatch.Begin();
 
+            spriteBatch.Draw(player.sprite, player.position, Color.White);
 
             spriteBatch.End();
-
-            //TODO: Draw your game
             base.Draw(time);
         }
     }

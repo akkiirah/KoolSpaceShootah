@@ -16,5 +16,7 @@ namespace KoolSpaceShootah
         void Initialize();
         void Move();
         void Input();
+        void Update();
+        void LoadSprite(Texture2D _tex);
     }
 }

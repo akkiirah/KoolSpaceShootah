@@ -7,19 +7,17 @@ namespace KoolSpaceShootah
     abstract class AbstractEntity : IEntity
     {
         // Enum to differentiate between Player or Enemy/Npc
-        enum User
+        public enum User
         {
             Player,
             Npc
         }
 
         // Variables & properties
-        private User user;
-        protected bool boosting;
+        public User user;
         private float normal;
-        private float half;
-        private Texture2D texture;
-        private Vector2 vector;
+        protected Texture2D texture;
+        protected Vector2 vector;
 
         public float normalSpeed
         {
@@ -28,7 +26,7 @@ namespace KoolSpaceShootah
 
         public float halfSpeed
         {
-            get { return half; }
+            get { return normal / 2; }
         }
 
         public float speed
@@ -40,12 +38,13 @@ namespace KoolSpaceShootah
         public Texture2D sprite
         {
             get { return texture; }
+            set { texture = value; }
         }
 
         public Vector2 position
         {
-            get { return position; }
-            set { position = value; }
+            get { return vector; }
+            set { vector = value; }
         }
 
         // Initializes variables & properties
@@ -54,10 +53,10 @@ namespace KoolSpaceShootah
             switch (user)
             {
                 case User.Player:
+                    normal = 1.5f;
                     break;
                 case User.Npc:
-                    break;
-                default:
+                    normal = 1.1f;
                     break;
             }
         }
@@ -71,6 +70,15 @@ namespace KoolSpaceShootah
         public void Move()
         {
 
+        }
+
+        public void Update()
+        {
+
+        }
+        public void LoadSprite(Texture2D _tex)
+        {
+            this.sprite = _tex;
         }
     }
 }

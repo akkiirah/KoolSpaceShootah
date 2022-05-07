@@ -6,7 +6,11 @@ namespace KoolSpaceShootah
 {
      class Player : AbstractEntity
      {
-        
-        
+        private bool boosting;
+
+        public Player(User _user)
+        {
+            this.user = _user;
+        }
      }
 }
