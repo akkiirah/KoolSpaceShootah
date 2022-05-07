@@ -5,13 +5,7 @@ namespace KoolSpaceShootah
 {
     interface IEntity
     {
-        enum User
-        {
-            Player,
-            Npc
-        }
-
-        IEntity.User user { get; set; }
+        // Every Entity has these properties
         float speed { get; set; }
         float normalSpeed { get; }
         float halfSpeed { get; }
@@ -21,5 +15,6 @@ namespace KoolSpaceShootah
 
         void Initialize();
         void Move();
+        void Input();
     }
 }

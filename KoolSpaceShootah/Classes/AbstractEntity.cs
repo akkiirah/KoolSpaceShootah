@@ -6,18 +6,20 @@ namespace KoolSpaceShootah
 {
     abstract class AbstractEntity : IEntity
     {
-        #region Variables
+        // Enum to differentiate between Player or Enemy/Npc
+        enum User
+        {
+            Player,
+            Npc
+        }
+
+        // Variables & properties
+        private User user;
         protected bool boosting;
         private float normal;
         private float half;
         private Texture2D texture;
         private Vector2 vector;
-
-        public IEntity.User user
-        {
-            get { return user; }
-            set { user = value; }
-        }
 
         public float normalSpeed
         {
@@ -45,27 +47,30 @@ namespace KoolSpaceShootah
             get { return position; }
             set { position = value; }
         }
-        #endregion
 
-        #region Methods
-
+        // Initializes variables & properties
         public void Initialize()
         {
             switch (user)
             {
-                case IEntity.User.Player:
+                case User.Player:
                     break;
-                case IEntity.User.Npc:
+                case User.Npc:
                     break;
                 default:
                     break;
             }
         }
 
+        // Player will be overwriting these
+        public void Input()
+        {
+
+        }
+
         public void Move()
         {
 
         }
-        #endregion
     }
 }
