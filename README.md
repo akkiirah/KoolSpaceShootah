@@ -17,6 +17,12 @@ Projectiles [4],<br />
 Moving backgrounds [4],<br />
 Menus [7]
 
+### Audio
+Background music [7],<br />
+Death sounds [4],<br />
+Shooting sounds [4],<br />
+Asteroid sounds [2],<br />
+
 ### Programming
 Spawnsystem,<br />
 Movement,<br />
