@@ -18,29 +18,36 @@ namespace KoolSpaceShootah
         {
             graphicsManager = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            // Framerate cap
+            IsFixedTimeStep = true;
+            TargetElapsedTime = TimeSpan.FromSeconds(1d / 120d);
         }
 
+        // Initialization logic
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            Player p = new Player();
             base.Initialize();
         }
 
+        // Loads content
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            
-            // TODO: load content here
         }
 
+        // Unload content
         protected override void UnloadContent()
         {
-            // TODO: Unload content here
+
         }
 
+        // Updates according to 
         protected override void Update(GameTime gameTime)
         {
-            if(GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+
+            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
             {
                 this.Exit();
             }
@@ -49,7 +56,12 @@ namespace KoolSpaceShootah
 
         protected override void Draw(GameTime time)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
+
+            spriteBatch.Begin();
+
+
+            spriteBatch.End();
 
             //TODO: Draw your game
             base.Draw(time);
