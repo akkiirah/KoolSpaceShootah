@@ -16,8 +16,10 @@ namespace KoolSpaceShootah
 
         // Player
         Player player;
-
         Texture2D playerSprite;
+
+        // Arrays
+        Enemy[] allEnemies;
 
         public SpaceShootahGame()
         {
@@ -29,7 +31,7 @@ namespace KoolSpaceShootah
             TargetElapsedTime = TimeSpan.FromSeconds(1d / 120d);
         }
 
-        // Initialization logic
+        // Creates and initializes entities in the game.
         protected override void Initialize()
         {
             player = new Player(AbstractEntity.User.Player);
@@ -37,12 +39,12 @@ namespace KoolSpaceShootah
             base.Initialize();
         }
 
-        // Loads content
+        // Loads sprites for enteties >after< they have been loaded and initialized
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
             playerSprite = Content.Load<Texture2D>("player");
-            player.LoadSprite(playerSprite);
+            player.LoadContent(playerSprite, GraphicsDevice);
         }
 
         // Unload content
@@ -51,7 +53,6 @@ namespace KoolSpaceShootah
 
         }
 
-        // Updates according to 
         protected override void Update(GameTime gameTime)
         {
 
@@ -65,11 +66,9 @@ namespace KoolSpaceShootah
         protected override void Draw(GameTime time)
         {
             GraphicsDevice.Clear(Color.DarkGray);
-            spriteBatch.Begin();
 
-            spriteBatch.Draw(player.sprite, player.position, Color.White);
+            player.Draw(time);
 
-            spriteBatch.End();
             base.Draw(time);
         }
     }

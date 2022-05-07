@@ -18,6 +18,7 @@ namespace KoolSpaceShootah
         private float normal;
         protected Texture2D texture;
         protected Vector2 vector;
+        SpriteBatch spriteBatch;
 
         public float normalSpeed
         {
@@ -76,9 +77,19 @@ namespace KoolSpaceShootah
         {
 
         }
-        public void LoadSprite(Texture2D _tex)
+
+        public void LoadContent(Texture2D _sprite, GraphicsDevice _graphicsDevice)
         {
-            this.sprite = _tex;
+            this.sprite = _sprite;
+
+            spriteBatch = new SpriteBatch(_graphicsDevice);
+        }
+
+        public void Draw(GameTime time)
+        {
+            spriteBatch.Begin();
+            spriteBatch.Draw(sprite, position, Color.White);
+            spriteBatch.End();
         }
     }
 }
