@@ -6,90 +6,54 @@ namespace KoolSpaceShootah
 {
     abstract class AbstractEntity : IEntity
     {
-        // Enum to differentiate between Player or Enemy/Npc
-        public enum User
+        protected float speed;
+        protected float normalSpeed;
+        protected float halfSpeed;
+
+        protected Vector2 position;
+        protected Texture2D sprite; 
+        private SpriteBatch spriteBatch;
+
+        protected Random rand;
+        protected float jitterStrength;
+
+        public Vector2 Position { get { return position; } }
+
+        public virtual void Initialize()
         {
-            Player,
-            Npc
+            rand = new Random();
+            speed = normalSpeed;
+            jitterStrength = 4;
+            halfSpeed = normalSpeed / 2;
         }
 
-        // Variables & properties
-        public User user;
-        private float normal;
-        protected Texture2D texture;
-        protected Vector2 vector;
-        SpriteBatch spriteBatch;
+        public abstract void Update();
 
-        public float normalSpeed
+        protected abstract void Input();
+
+        public virtual void Draw(GameTime time)
         {
-            get { return normal; }
-        }
-
-        public float halfSpeed
-        {
-            get { return normal / 2; }
-        }
-
-        public float speed
-        {
-            get { return speed; }
-            set { speed = normalSpeed; }
-        }
-
-        public Texture2D sprite
-        {
-            get { return texture; }
-            set { texture = value; }
-        }
-
-        public Vector2 position
-        {
-            get { return vector; }
-            set { vector = value; }
-        }
-
-        // Initializes variables & properties
-        public void Initialize()
-        {
-            switch (user)
-            {
-                case User.Player:
-                    normal = 1.5f;
-                    break;
-                case User.Npc:
-                    normal = 1.1f;
-                    break;
-            }
-        }
-
-        // Player will be overwriting these
-        public void Input()
-        {
-
-        }
-
-        public void Move()
-        {
-
-        }
-
-        public void Update()
-        {
-
+            spriteBatch.Begin();
+            spriteBatch.Draw(sprite, position, Color.White);
+            spriteBatch.End();
         }
 
         public void LoadContent(Texture2D _sprite, GraphicsDevice _graphicsDevice)
         {
             this.sprite = _sprite;
-
             spriteBatch = new SpriteBatch(_graphicsDevice);
         }
 
-        public void Draw(GameTime time)
+        protected abstract void Move();
+
+        /// <summary>
+        /// Randomly shakes entities around
+        /// </summary>
+        protected void Jitter()
         {
-            spriteBatch.Begin();
-            spriteBatch.Draw(sprite, position, Color.White);
-            spriteBatch.End();
+            float jitX = rand.Next(-1, 2);
+            float jitY = rand.Next(-1, 2);
+            position = new Vector2(position.X + (jitX / jitterStrength), position.Y + (jitY / jitterStrength));
         }
     }
 }
