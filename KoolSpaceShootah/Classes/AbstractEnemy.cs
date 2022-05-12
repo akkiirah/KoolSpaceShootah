@@ -31,7 +31,6 @@ namespace KoolSpaceShootah
             base.LoadContent(_sprite, _graphicsDevice, _width, _height);
 
             position.X = screenWidth / 2 - sprite.Width / 2;
-            position.Y = screenHeight / 6 - sprite.Height;
         }
     }
 }
