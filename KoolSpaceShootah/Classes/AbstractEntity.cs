@@ -14,6 +14,8 @@ namespace KoolSpaceShootah
         protected Texture2D sprite; 
         private SpriteBatch spriteBatch;
 
+        protected int screenWidth;
+        protected int screenHeight;
         protected Random rand;
         protected float jitterStrength;
 
@@ -44,7 +46,25 @@ namespace KoolSpaceShootah
             spriteBatch = new SpriteBatch(_graphicsDevice);
         }
 
-        protected abstract void Move();
+        protected virtual void Move()
+        {
+            if (position.X < 0)
+            {
+                position.X += 2;
+            }
+            else if (position.X > screenWidth - sprite.Width)
+            {
+                position.X -= 2;
+            }
+            else if (position.Y < 0)
+            {
+                position.Y += 2;
+            }
+            else if (position.Y > screenHeight - sprite.Height)
+            {
+                position.Y -= 2;
+            }
+        }
 
         /// <summary>
         /// Randomly shakes entities around

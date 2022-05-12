@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Xna.Framework;
@@ -31,7 +32,12 @@ namespace KoolSpaceShootah
 
         protected override void Initialize()
         {
-            player = new Player();
+            graphicsManager.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            graphicsManager.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            graphicsManager.HardwareModeSwitch = false;
+            graphicsManager.ToggleFullScreen();
+            
+            player = new Player(Window.ClientBounds.Width, Window.ClientBounds.Height);
             player.Initialize();
 
             base.Initialize();
@@ -56,7 +62,8 @@ namespace KoolSpaceShootah
         {
             player.Update();
 
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
+            // Debug only for now
+            if (player.CloseGame())
             {
                 this.Exit();
             }

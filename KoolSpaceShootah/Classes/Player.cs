@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -9,9 +9,14 @@ namespace KoolSpaceShootah
      {
         private KeyboardState keyState;
 
-        public Player()
-        {
 
+        public Player(int _width, int _height)
+        {
+            screenWidth = _width;
+            screenHeight = _height;
+
+            position.X = screenWidth / 2;
+            position.Y = screenHeight / 1.2f;
         }
 
         /// <summary>
@@ -59,6 +64,22 @@ namespace KoolSpaceShootah
             else if (keyState.IsKeyDown(Keys.Down))
             {
                 position = new Vector2(position.X, position.Y + speed);
+            }
+            base.Move();
+
+            Debug.WriteLine("Width: " + screenWidth.ToString(), ", Height: " + screenHeight.ToString());
+        }
+
+        // Debug only for now
+        public bool CloseGame()
+        {
+            if (keyState.IsKeyDown(Keys.Escape))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
