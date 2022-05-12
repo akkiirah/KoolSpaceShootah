@@ -10,6 +10,6 @@ namespace KoolSpaceShootah
         void Initialize();
         void Update();
         void Draw(GameTime time);
-        void LoadContent(Texture2D _tex, GraphicsDevice _graphicsDevice);
+        void LoadContent(Texture2D _tex, GraphicsDevice _graphicsDevice, int _width, int _height);
     }
 }

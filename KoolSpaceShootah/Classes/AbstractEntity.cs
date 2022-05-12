@@ -17,7 +17,6 @@ namespace KoolSpaceShootah
         protected int screenWidth;
         protected int screenHeight;
         protected Random rand;
-        protected float jitterStrength;
 
         public Vector2 Position { get { return position; } }
 
@@ -25,7 +24,6 @@ namespace KoolSpaceShootah
         {
             rand = new Random();
             speed = normalSpeed;
-            jitterStrength = 4;
             halfSpeed = normalSpeed / 2;
         }
 
@@ -40,8 +38,11 @@ namespace KoolSpaceShootah
             spriteBatch.End();
         }
 
-        public void LoadContent(Texture2D _sprite, GraphicsDevice _graphicsDevice)
+        public virtual void LoadContent(Texture2D _sprite, GraphicsDevice _graphicsDevice, int _width, int _height)
         {
+            screenWidth = _width;
+            screenHeight = _height;
+
             this.sprite = _sprite;
             spriteBatch = new SpriteBatch(_graphicsDevice);
         }
@@ -68,12 +69,13 @@ namespace KoolSpaceShootah
 
         /// <summary>
         /// Randomly shakes entities around
+        /// Position has to be an int, otherwise sprite would flicker
         /// </summary>
         protected void Jitter()
         {
-            float jitX = rand.Next(-1, 2);
-            float jitY = rand.Next(-1, 2);
-            position = new Vector2(position.X + (jitX / jitterStrength), position.Y + (jitY / jitterStrength));
+            int jitX = rand.Next(-1, 2);
+            int jitY = rand.Next(-1, 2);
+            position = new Vector2(Convert.ToInt32(position.X + (jitX / 1.9f)), Convert.ToInt32(position.Y + (jitY / 1.9f)));
         }
     }
 }

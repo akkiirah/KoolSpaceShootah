@@ -10,13 +10,9 @@ namespace KoolSpaceShootah
         private KeyboardState keyState;
 
 
-        public Player(int _width, int _height)
+        public Player()
         {
-            screenWidth = _width;
-            screenHeight = _height;
 
-            position.X = screenWidth / 2;
-            position.Y = screenHeight / 1.2f;
         }
 
         /// <summary>
@@ -70,6 +66,14 @@ namespace KoolSpaceShootah
             Debug.WriteLine("Width: " + screenWidth.ToString(), ", Height: " + screenHeight.ToString());
         }
 
+        public override void LoadContent(Texture2D _sprite, GraphicsDevice _graphicsDevice, int _width, int _height)
+        {
+
+            base.LoadContent(_sprite, _graphicsDevice, _width, _height);
+            position.X = screenWidth / 2 - sprite.Width / 2;
+            position.Y = screenHeight * 2.5f / 3;
+        }
+
         // Debug only for now
         public bool CloseGame()
         {
@@ -100,5 +104,5 @@ namespace KoolSpaceShootah
                 speed = normalSpeed;
             }
         }
-    }
+     }
 }
