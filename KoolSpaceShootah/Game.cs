@@ -52,7 +52,7 @@ namespace KoolSpaceShootah
             TargetElapsedTime = TimeSpan.FromSeconds(1d / 120);
 
             graphicsManager.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-            graphicsManager.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+            graphicsManager.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
             graphicsManager.HardwareModeSwitch = false;
             graphicsManager.ToggleFullScreen();
         }

@@ -59,19 +59,19 @@ namespace KoolSpaceShootah
         {
             if (position.X < 0)
             {
-                position.X += normalSpeed * deltaTime;
+                position.X += (normalSpeed * 1.5f) * deltaTime;
             }
             else if (position.X > screenWidth - sprite.Width)
             {
-                position.X -= normalSpeed * deltaTime;
+                position.X -= (normalSpeed * 1.5f) * deltaTime;
             }
             else if (position.Y < 0)
             {
-                position.Y += normalSpeed * deltaTime;
+                position.Y += (normalSpeed * 1.5f) * deltaTime;
             }
             else if (position.Y > screenHeight - sprite.Height)
             {
-                position.Y -= normalSpeed * deltaTime;
+                position.Y -= (normalSpeed * 1.5f) * deltaTime;
             }
         }
 

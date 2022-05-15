@@ -33,6 +33,7 @@ namespace KoolSpaceShootah
             base.LoadContent(_sprite, _graphicsDevice, _width, _height);
 
             position.X = rand.Next(0, screenWidth - sprite.Width);
+            position.Y = rand.Next(-screenHeight , -sprite.Height * 2);
         }
     }
 }
