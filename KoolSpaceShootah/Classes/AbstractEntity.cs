@@ -14,6 +14,7 @@ namespace KoolSpaceShootah
         protected Texture2D sprite; 
         private SpriteBatch spriteBatch;
 
+        protected float deltaTime;
         protected int screenWidth;
         protected int screenHeight;
         protected Random rand;
@@ -27,7 +28,14 @@ namespace KoolSpaceShootah
             halfSpeed = normalSpeed / 2;
         }
 
-        public abstract void Update();
+        public virtual void Update(GameTime gameTime)
+        {
+            deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            Input();
+            Jitter();
+            Move();
+        }
+
 
         protected abstract void Input();
 

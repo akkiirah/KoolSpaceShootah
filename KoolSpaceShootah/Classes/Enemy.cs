@@ -6,7 +6,7 @@ namespace KoolSpaceShootah
 {
     internal class Enemy  : AbstractEnemy
     {
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
             Input();
             Jitter();

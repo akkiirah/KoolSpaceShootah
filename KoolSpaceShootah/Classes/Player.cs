@@ -7,7 +7,7 @@ namespace KoolSpaceShootah
 {
      class Player : AbstractEntity
      {
-        private KeyboardState keyState;
+        public KeyboardState keyState;
 
 
         public Player()
@@ -20,15 +20,13 @@ namespace KoolSpaceShootah
         /// </summary>
         public override void Initialize()
         {
-            normalSpeed = 1.5f;
+            normalSpeed = 180f;
             base.Initialize();
         }
 
-        public override void Update()
+        public override void Update(GameTime gameTime)
         {
-            Input();
-            Jitter();
-            Move();
+            base.Update(gameTime);
         }
 
         public override void Draw(GameTime time)
@@ -46,24 +44,22 @@ namespace KoolSpaceShootah
         {
             if (keyState.IsKeyDown(Keys.Right))
             {
-                position = new Vector2(position.X + speed, position.Y);
+                position.X += speed * deltaTime;
             }
             else if (keyState.IsKeyDown(Keys.Left))
             {
-                position = new Vector2(position.X - speed, position.Y);
+                position.X -= speed * deltaTime;
             }
 
             if (keyState.IsKeyDown(Keys.Up))
             {
-                position = new Vector2(position.X, position.Y - speed);
+                position.Y -= speed * deltaTime;
             }
             else if (keyState.IsKeyDown(Keys.Down))
             {
-                position = new Vector2(position.X, position.Y + speed);
+                position.Y += speed * deltaTime;
             }
             base.Move();
-
-            Debug.WriteLine("Width: " + screenWidth.ToString(), ", Height: " + screenHeight.ToString());
         }
 
         public override void LoadContent(Texture2D _sprite, GraphicsDevice _graphicsDevice, int _width, int _height)
@@ -72,19 +68,6 @@ namespace KoolSpaceShootah
             base.LoadContent(_sprite, _graphicsDevice, _width, _height);
             position.X = screenWidth / 2 - sprite.Width / 2;
             position.Y = screenHeight - sprite.Height;
-        }
-
-        // Debug only for now
-        public bool CloseGame()
-        {
-            if (keyState.IsKeyDown(Keys.Escape))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
 
         /// <summary>

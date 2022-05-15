@@ -14,11 +14,7 @@ namespace KoolSpaceShootah
         GraphicsDeviceManager graphicsManager;
         SpriteBatch spriteBatch;
 
-        Player player;
-        Enemy enemy;
-
-        Texture2D playerSprite;
-        Texture2D enemy1Sprite;
+        GameManager gameManager;
 
 
         /// <summary>
@@ -28,7 +24,6 @@ namespace KoolSpaceShootah
         {
             graphicsManager = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-
 
             IsFixedTimeStep = true;
             TargetElapsedTime = TimeSpan.FromSeconds(1d / 120d);
@@ -41,12 +36,9 @@ namespace KoolSpaceShootah
             graphicsManager.HardwareModeSwitch = false;
             graphicsManager.ToggleFullScreen();
 
-            player = new Player();
-            player.Initialize();
+            gameManager = new GameManager();
+            gameManager.Initialize();
 
-            // debug only
-            enemy = new Enemy();
-            enemy.Initialize();
 
             base.Initialize();
         }
@@ -57,11 +49,15 @@ namespace KoolSpaceShootah
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            playerSprite = Content.Load<Texture2D>("player");
-            player.LoadContent(playerSprite, GraphicsDevice, Window.ClientBounds.Width, Window.ClientBounds.Height);
 
-            enemy1Sprite = Content.Load<Texture2D>("enemy1");
-            enemy.LoadContent(enemy1Sprite, GraphicsDevice, Window.ClientBounds.Width, Window.ClientBounds.Height);
+            gameManager.LoadContent(
+                Content.Load<Texture2D>("player"),
+                Content.Load<Texture2D>("enemy1"),
+                GraphicsDevice,
+                Window.ClientBounds.Width,
+                Window.ClientBounds.Height
+                );
+
         }
 
         protected override void UnloadContent()
@@ -71,14 +67,13 @@ namespace KoolSpaceShootah
 
         protected override void Update(GameTime gameTime)
         {
-            player.Update();
-            enemy.Update();
+            gameManager.Update(gameTime);
 
-            // Debug only for now
-            if (player.CloseGame())
+            if (gameManager.CloseGame())
             {
                 this.Exit();
             }
+
             base.Update(gameTime);
         }
 
@@ -86,8 +81,7 @@ namespace KoolSpaceShootah
         {
             GraphicsDevice.Clear(Color.DarkGray);
 
-            player.Draw(time);
-            enemy.Draw(time);
+            gameManager.Draw(time);
 
             base.Draw(time);
         }
