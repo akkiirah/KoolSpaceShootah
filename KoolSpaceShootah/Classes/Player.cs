@@ -59,6 +59,7 @@ namespace KoolSpaceShootah
             {
                 position.Y += speed * deltaTime;
             }
+
             base.Move();
         }
 
@@ -86,6 +87,12 @@ namespace KoolSpaceShootah
             {
                 speed = normalSpeed;
             }
+        }
+
+        public bool BackToMenu()
+        {
+            if (keyState.IsKeyDown(Keys.E)) { return true; }
+            else { return false; }
         }
      }
 }

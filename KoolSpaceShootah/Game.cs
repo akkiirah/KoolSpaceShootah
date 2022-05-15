@@ -12,9 +12,32 @@ namespace KoolSpaceShootah
     public class SpaceShootahGame : Game
     {
         GraphicsDeviceManager graphicsManager;
-        SpriteBatch spriteBatch;
 
-        GameManager gameManager;
+        MenuManager menuManager;
+        Player player;
+        Enemy[] enemies;
+        IEntity[] entities;
+
+        Texture2D playerSprite;
+        Texture2D enemySprite;
+
+        GameState gameState = GameState.Menu;
+        Level level = Level.One;
+
+        enum GameState
+        {
+            Menu,
+            Options,
+            Ingame
+        }
+
+        enum Level
+        {
+            One = 3,
+            Two = 31,
+            Three = 57,
+            Four = 84
+        }
 
 
         /// <summary>
@@ -27,63 +50,199 @@ namespace KoolSpaceShootah
 
             IsFixedTimeStep = true;
             TargetElapsedTime = TimeSpan.FromSeconds(1d / 120d);
-        }
 
-        protected override void Initialize()
-        {
             graphicsManager.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             graphicsManager.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             graphicsManager.HardwareModeSwitch = false;
             graphicsManager.ToggleFullScreen();
+        }
 
-            gameManager = new GameManager();
-            gameManager.Initialize();
+        /// <summary>
+        /// Probably not the correct way to use this method but used when switching and initializing
+        /// states accordingly.
+        /// </summary>
+        protected override void Initialize()
+        {
+            switch (gameState)
+            {
+                case GameState.Menu:
+                    menuManager = new MenuManager();
+                    break;
 
+                case GameState.Options:
+                    break;
+
+                case GameState.Ingame:
+                    Spawn();
+
+                    foreach (var entity in entities)
+                    {
+                        entity.Initialize();
+                    }
+                    break;
+            }
 
             base.Initialize();
         }
 
         /// <summary>
-        /// Loads sprites for entities after they have been loaded and initialized
+        /// Loads sprites for entities after they have been loaded and initialized.
         /// </summary>
         protected override void LoadContent()
         {
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            switch (gameState)
+            {
+                case GameState.Menu:
+                    menuManager.LoadContent(GraphicsDevice);
+                    break;
 
-            gameManager.LoadContent(
-                Content.Load<Texture2D>("player"),
-                Content.Load<Texture2D>("enemy1"),
-                GraphicsDevice,
-                Window.ClientBounds.Width,
-                Window.ClientBounds.Height
-                );
+                case GameState.Ingame:
+                    playerSprite = Content.Load<Texture2D>("player");
+                    enemySprite = Content.Load<Texture2D>("enemy1");
+
+                    entities[0].LoadContent(playerSprite,
+                    GraphicsDevice,
+                    Window.ClientBounds.Width,
+                    Window.ClientBounds.Height);
+
+                    foreach (var enemy in enemies)
+                    {
+                        enemy.LoadContent(
+                        enemySprite,
+                        GraphicsDevice,
+                        Window.ClientBounds.Width,
+                        Window.ClientBounds.Height);
+                    }
+                    break;
+            }
 
         }
 
+        /// <summary>
+        /// Unloads arrays and resets the player and the menu manager to preserve memory... i guess?
+        /// </summary>
         protected override void UnloadContent()
         {
+            switch (gameState)
+            {
+                case GameState.Menu:
+                    if(entities == null) { return; }  
 
+                    Array.Clear(entities, 0, entities.Length);
+                    Array.Clear(enemies, 0, enemies.Length);
+                    player = null;
+                    break;
+
+                case GameState.Ingame:
+                    menuManager = null;
+                    break;
+            }
         }
 
+        /// <summary>
+        /// Updates the logic for every entity and also changes gamestates.
+        /// Also calls to unload content from other gamestates to preserve memory.
+        /// </summary>
         protected override void Update(GameTime gameTime)
         {
-            gameManager.Update(gameTime);
-
-            if (gameManager.CloseGame())
+            if (menuManager.keyState.IsKeyDown(Keys.Escape))
             {
                 this.Exit();
+            }
+
+            switch (gameState)
+            {
+                case GameState.Menu:
+                    menuManager.Update();
+
+                    if (menuManager.StartGame())
+                    {
+                        UnloadContent();
+                        gameState = GameState.Ingame;
+                        Initialize();
+                        LoadContent();
+                    }
+                    break;
+
+                case GameState.Ingame:
+                    foreach (var entity in entities)
+                    {
+                        entity.Update(gameTime);
+                    }
+
+                    if(player.BackToMenu())
+                    {
+                        UnloadContent();
+                        gameState = GameState.Menu;
+                        Initialize();
+                        LoadContent();
+                    }
+
+                    break;
             }
 
             base.Update(gameTime);
         }
 
+        /// <summary>
+        /// Draws the game according to what gamestate the game is currently in.
+        /// </summary>
         protected override void Draw(GameTime time)
         {
-            GraphicsDevice.Clear(Color.DarkGray);
+            switch (gameState)
+            {
+                case GameState.Menu:
+                    menuManager.Draw();
+                    break;
 
-            gameManager.Draw(time);
+                case GameState.Ingame:
+                    GraphicsDevice.Clear(Color.DarkGray);
+                    foreach (var entity in entities)
+                    {
+                        entity.Draw(time);
+                    }
+                    break;
+            }
 
             base.Draw(time);
+        }
+
+        /// <summary>
+        /// Each level enumerator has a value attached to it.
+        /// This is used as number for enemies in the corresponding level.
+        /// </summary>
+        private void Spawn()
+        {
+            var enemyAmount = (int)level;
+
+            switch (level)
+            {
+
+                case Level.One:
+                entities = new IEntity[enemyAmount + 1];
+                enemies = new Enemy[enemyAmount];
+
+                player = new Player();
+                entities[0] = player;
+
+                for (int i = 0; i < enemyAmount; i++)
+                {
+                    enemies[i] = new Enemy();
+                    entities[i + 1] = enemies[i];
+                }
+                    break;
+
+                case Level.Two:
+                    break;
+
+                case Level.Three:
+                    break;
+
+                case Level.Four:
+                    break;
+
+            }
+
         }
     }
 }
