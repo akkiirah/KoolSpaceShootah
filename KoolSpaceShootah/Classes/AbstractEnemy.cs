@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -8,6 +9,7 @@ namespace KoolSpaceShootah
     {
         public override void Initialize()
         {
+            normalSpeed = 180f;
             base.Initialize();
         }
 
@@ -23,7 +25,7 @@ namespace KoolSpaceShootah
 
         protected override void Move()
         {
-
+            base.Move();
         }
 
         public override void LoadContent(Texture2D _sprite, GraphicsDevice _graphicsDevice, int _width, int _height)

@@ -49,7 +49,7 @@ namespace KoolSpaceShootah
             Content.RootDirectory = "Content";
 
             IsFixedTimeStep = true;
-            TargetElapsedTime = TimeSpan.FromSeconds(1d / 120d);
+            TargetElapsedTime = TimeSpan.FromSeconds(1d / 120);
 
             graphicsManager.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
             graphicsManager.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
@@ -145,6 +145,9 @@ namespace KoolSpaceShootah
         /// </summary>
         protected override void Update(GameTime gameTime)
         {
+
+            Debug.WriteLine(1 / gameTime.ElapsedGameTime.TotalSeconds);
+
             if (menuManager.keyState.IsKeyDown(Keys.Escape))
             {
                 this.Exit();

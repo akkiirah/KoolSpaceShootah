@@ -4,12 +4,11 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace KoolSpaceShootah
 {
-    internal class Enemy  : AbstractEnemy
+    class Enemy : AbstractEnemy
     {
         public override void Update(GameTime gameTime)
         {
-            Input();
-            Jitter();
+            base.Update(gameTime);
         }
 
         public override void Draw(GameTime time)
