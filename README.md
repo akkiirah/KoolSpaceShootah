@@ -10,11 +10,11 @@ Also it's fun and challenging to do almost everything by yourself.
 
 ### Sprites:
 
-Enemy types [3], <br />
+Enemy types [2], <br />
 Asteroids [2], <br />
 Projectiles [4], <br />
 Moving backgrounds [4], <br />
-Menus [7] <br />
+Menus / UI [7] <br />
 
 ### Audio
 
@@ -25,11 +25,16 @@ Asteroid sounds [2], <br />
 
 ### Programming
 
-Spawnsystem, <br />
-Movement, <br />
-Healthsystem, <br />
-Projectiles, <br />
-Soundsystem, <br />
+Game manager, <br />
+Spawn system, <br />
+Sound system, <br />
+Health system, <br />
+Movement enemies, <br />
+Movement asteroids, <br />
+Cut Scenes player, <br />
+Cut Scenes enemies, <br />
+Projectiles player, <br />
+Projectiles enemies, <br />
 Scoreboard (saving & loading from file), <br />
 Options (saving & loading from file) <br />
 
@@ -37,11 +42,12 @@ Options (saving & loading from file) <br />
 
 ### Sprites:
 
-Player
+Player, <br />
+Enemy types [1] <br />
 
 ### Programming:
 
--
+Movement Player <br />
 
 ### Audio:
 
