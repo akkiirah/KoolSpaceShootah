@@ -33,7 +33,7 @@ namespace KoolSpaceShootah
 
         enum Level
         {
-            One = 3,
+            One = 8,
             Two = 31,
             Three = 57,
             Four = 84
