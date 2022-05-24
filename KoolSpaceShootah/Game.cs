@@ -1,11 +1,8 @@
-﻿using System;
-using System.Diagnostics;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Content;
+using System;
+using System.Diagnostics;
 
 namespace KoolSpaceShootah
 {
@@ -76,12 +73,9 @@ namespace KoolSpaceShootah
                     Spawn();
 
                     foreach (var entity in entities)
-                    {
-                        entity.Initialize();
-                    }
+                    { entity.Initialize(); }
                     break;
             }
-
             base.Initialize();
         }
 
@@ -115,7 +109,6 @@ namespace KoolSpaceShootah
                     }
                     break;
             }
-
         }
 
         /// <summary>
@@ -126,7 +119,8 @@ namespace KoolSpaceShootah
             switch (gameState)
             {
                 case GameState.Menu:
-                    if(entities == null) { return; }  
+                    if (entities == null) 
+                    { return; }
 
                     Array.Clear(entities, 0, entities.Length);
                     Array.Clear(enemies, 0, enemies.Length);
@@ -145,13 +139,10 @@ namespace KoolSpaceShootah
         /// </summary>
         protected override void Update(GameTime gameTime)
         {
-
             Debug.WriteLine(1 / gameTime.ElapsedGameTime.TotalSeconds);
 
             if (menuManager.keyState.IsKeyDown(Keys.Escape))
-            {
-                this.Exit();
-            }
+            { this.Exit(); }
 
             switch (gameState)
             {
@@ -169,21 +160,17 @@ namespace KoolSpaceShootah
 
                 case GameState.Ingame:
                     foreach (var entity in entities)
-                    {
-                        entity.Update(gameTime);
-                    }
+                    { entity.Update(gameTime); }
 
-                    if(player.BackToMenu())
+                    if (player.BackToMenu())
                     {
                         UnloadContent();
                         gameState = GameState.Menu;
                         Initialize();
                         LoadContent();
                     }
-
                     break;
             }
-
             base.Update(gameTime);
         }
 
@@ -201,12 +188,9 @@ namespace KoolSpaceShootah
                 case GameState.Ingame:
                     GraphicsDevice.Clear(Color.DarkGray);
                     foreach (var entity in entities)
-                    {
-                        entity.Draw(time);
-                    }
+                    { entity.Draw(time); }
                     break;
             }
-
             base.Draw(time);
         }
 
@@ -220,19 +204,18 @@ namespace KoolSpaceShootah
 
             switch (level)
             {
-
                 case Level.One:
-                entities = new IEntity[enemyAmount + 1];
-                enemies = new Enemy[enemyAmount];
+                    entities = new IEntity[enemyAmount + 1];
+                    enemies = new Enemy[enemyAmount];
 
-                player = new Player();
-                entities[0] = player;
+                    player = new Player();
+                    entities[0] = player;
 
-                for (int i = 0; i < enemyAmount; i++)
-                {
-                    enemies[i] = new Enemy();
-                    entities[i + 1] = enemies[i];
-                }
+                    for (int i = 0; i < enemyAmount; i++)
+                    {
+                        enemies[i] = new Enemy();
+                        entities[i + 1] = enemies[i];
+                    }
                     break;
 
                 case Level.Two:
@@ -243,9 +226,7 @@ namespace KoolSpaceShootah
 
                 case Level.Four:
                     break;
-
             }
-
         }
     }
 }

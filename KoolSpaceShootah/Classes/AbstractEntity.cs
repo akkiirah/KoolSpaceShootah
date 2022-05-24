@@ -1,6 +1,6 @@
-﻿using System;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 
 namespace KoolSpaceShootah
 {
@@ -11,7 +11,7 @@ namespace KoolSpaceShootah
         protected float halfSpeed;
 
         protected Vector2 position;
-        protected Texture2D sprite; 
+        protected Texture2D sprite;
         private SpriteBatch spriteBatch;
 
         protected float deltaTime;
@@ -57,22 +57,16 @@ namespace KoolSpaceShootah
 
         protected virtual void Move()
         {
-            if (position.X < 0)
-            {
-                position.X += (normalSpeed * 1.5f) * deltaTime;
-            }
-            else if (position.X > screenWidth - sprite.Width)
-            {
-                position.X -= (normalSpeed * 1.5f) * deltaTime;
-            }
-            else if (position.Y < 0)
-            {
-                position.Y += (normalSpeed * 1.5f) * deltaTime;
-            }
-            else if (position.Y > screenHeight - sprite.Height)
-            {
-                position.Y -= (normalSpeed * 1.5f) * deltaTime;
-            }
+            var speedMod = normalSpeed * 1.5f * deltaTime;
+
+            if (position.X < 0) 
+            { position.X += speedMod; }
+            else if (position.X > screenWidth - sprite.Width) 
+            { position.X -= speedMod; }
+            else if (position.Y < 0) 
+            { position.Y += speedMod; }
+            else if (position.Y > screenHeight - sprite.Height) 
+            { position.Y -= speedMod; }
         }
 
         /// <summary>

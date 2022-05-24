@@ -1,19 +1,15 @@
-﻿using System.Diagnostics;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace KoolSpaceShootah
 {
-     class Player : AbstractEntity
-     {
+    class Player : AbstractEntity
+    {
         public KeyboardState keyState;
 
-
         public Player()
-        {
-
-        }
+        { }
 
         /// <summary>
         /// Initializes the player's variables and those from the AbstractEntity class
@@ -25,14 +21,10 @@ namespace KoolSpaceShootah
         }
 
         public override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
-        }
+        { base.Update(gameTime); }
 
         public override void Draw(GameTime time)
-        {
-            base.Draw(time);
-        }
+        { base.Draw(time); }
 
         protected override void Input()
         {
@@ -42,30 +34,23 @@ namespace KoolSpaceShootah
 
         protected override void Move()
         {
+            var speedMod = speed * deltaTime;
+
             if (keyState.IsKeyDown(Keys.Right))
-            {
-                position.X += speed * deltaTime;
-            }
+            { position.X += speedMod; }
             else if (keyState.IsKeyDown(Keys.Left))
-            {
-                position.X -= speed * deltaTime;
-            }
+            { position.X -= speedMod; }
 
             if (keyState.IsKeyDown(Keys.Up))
-            {
-                position.Y -= speed * deltaTime;
-            }
+            { position.Y -= speedMod; }
             else if (keyState.IsKeyDown(Keys.Down))
-            {
-                position.Y += speed * deltaTime;
-            }
+            { position.Y += speedMod; }
 
             base.Move();
         }
 
         public override void LoadContent(Texture2D _sprite, GraphicsDevice _graphicsDevice, int _width, int _height)
         {
-
             base.LoadContent(_sprite, _graphicsDevice, _width, _height);
             position.X = screenWidth / 2 - sprite.Width / 2;
             position.Y = screenHeight;
@@ -80,19 +65,17 @@ namespace KoolSpaceShootah
                 keyState.IsKeyDown(Keys.Right) && keyState.IsKeyDown(Keys.Up) ||
                 keyState.IsKeyDown(Keys.Left) && keyState.IsKeyDown(Keys.Down) ||
                 keyState.IsKeyDown(Keys.Left) && keyState.IsKeyDown(Keys.Up))
-            {
-                speed = halfSpeed;
-            }
-            else
-            {
-                speed = normalSpeed;
-            }
+            { speed = halfSpeed; }
+            else 
+            { speed = normalSpeed; }
         }
 
         public bool BackToMenu()
         {
-            if (keyState.IsKeyDown(Keys.E)) { return true; }
-            else { return false; }
+            if (keyState.IsKeyDown(Keys.E)) 
+            { return true; }
+            else 
+            { return false; }
         }
-     }
+    }
 }

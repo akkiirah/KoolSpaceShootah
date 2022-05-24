@@ -1,24 +1,16 @@
-﻿using System;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
 
 namespace KoolSpaceShootah
 {
     class Enemy : AbstractEnemy
     {
         public override void Update(GameTime gameTime)
-        {
-            base.Update(gameTime);
-        }
+        { base.Update(gameTime); }
 
         public override void Draw(GameTime time)
-        {
-            base.Draw(time);
-        }
+        { base.Draw(time); }
 
         protected override void Input()
-        {
-
-        }
+        { }
     }
 }

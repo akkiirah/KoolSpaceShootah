@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -15,8 +12,10 @@ namespace KoolSpaceShootah
 
         public bool StartGame()
         {
-            if (keyState.IsKeyDown(Keys.F)) { return true; }
-            else { return false; }
+            if (keyState.IsKeyDown(Keys.F)) 
+            { return true; }
+            else 
+            { return false; }
         }
 
         public void LoadContent(GraphicsDevice _graphicsDevice)
@@ -33,13 +32,9 @@ namespace KoolSpaceShootah
         }
 
         private void Input()
-        {
-            keyState = Keyboard.GetState();
-        }
+        { keyState = Keyboard.GetState(); }
 
         public void Update()
-        {
-            Input();
-        }
+        { Input(); }
     }
 }
