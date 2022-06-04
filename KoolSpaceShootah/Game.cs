@@ -84,7 +84,7 @@ namespace KoolSpaceShootah
         /// </summary>
         protected override void LoadContent()
         {
-            //test
+            //test 2
             switch (gameState)
             {
                 case GameState.Menu:
