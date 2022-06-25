@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Diagnostics;
+using System.Linq;
 
 namespace KoolSpaceShootah
 {
@@ -30,12 +31,13 @@ namespace KoolSpaceShootah
 
         enum Level
         {
-            One = 8,
-            Two = 31,
-            Three = 57,
-            Four = 84
+            One = 0,
+            Two = 1,
+            Three = 2,
+            Four = 3
         }
 
+        int[][] enemyWaves = new int[4][];
 
         /// <summary>
         /// Inserted a 120fps cap to make the game run consistently
@@ -60,6 +62,10 @@ namespace KoolSpaceShootah
         /// </summary>
         protected override void Initialize()
         {
+            enemyWaves[0] = new int[] { 1, 2, 4, 8};
+            enemyWaves[1] = new int[] { 2, 6, 10, 14 };
+            enemyWaves[2] = new int[] { 3, 9, 15, 21 };
+
             switch (gameState)
             {
                 case GameState.Menu:
@@ -73,7 +79,9 @@ namespace KoolSpaceShootah
                     Spawn();
 
                     foreach (var entity in entities)
-                    { entity.Initialize(); }
+                    {
+                        if (entity != null) { entity.Initialize(); }
+                    }
                     break;
             }
             base.Initialize();
@@ -102,11 +110,15 @@ namespace KoolSpaceShootah
 
                     foreach (var enemy in enemies)
                     {
-                        enemy.LoadContent(
-                        enemySprite,
-                        GraphicsDevice,
-                        Window.ClientBounds.Width,
-                        Window.ClientBounds.Height);
+                        if (enemy != null) 
+                        {
+                            enemy.LoadContent(
+                            enemySprite,
+                            GraphicsDevice,
+                            Window.ClientBounds.Width,
+                            Window.ClientBounds.Height);
+                        }
+                        
                     }
                     break;
             }
@@ -161,7 +173,7 @@ namespace KoolSpaceShootah
 
                 case GameState.Ingame:
                     foreach (var entity in entities)
-                    { entity.Update(gameTime); }
+                    { if(entity != null) { entity.Update(gameTime); }}
 
                     if (player.BackToMenu())
                     {
@@ -189,7 +201,7 @@ namespace KoolSpaceShootah
                 case GameState.Ingame:
                     GraphicsDevice.Clear(Color.DarkGray);
                     foreach (var entity in entities)
-                    { entity.Draw(time); }
+                    { if (entity != null) { entity.Draw(time); }}
                     break;
             }
             base.Draw(time);
@@ -201,18 +213,20 @@ namespace KoolSpaceShootah
         /// </summary>
         private void Spawn()
         {
-            var enemyAmount = (int)level;
+            var pointer = 0;
+            var levelAmount = enemyWaves[(int)level].Max();
+            var waveAmount = enemyWaves[(int)level][pointer];
 
             switch (level)
             {
                 case Level.One:
-                    entities = new IEntity[enemyAmount + 1];
-                    enemies = new Enemy[enemyAmount];
+                    entities = new IEntity[levelAmount + 1];
+                    enemies = new Enemy[levelAmount];
 
                     player = new Player();
                     entities[0] = player;
 
-                    for (int i = 0; i < enemyAmount; i++)
+                    for (int i = 0; i < waveAmount; i++)
                     {
                         enemies[i] = new Enemy();
                         entities[i + 1] = enemies[i];
