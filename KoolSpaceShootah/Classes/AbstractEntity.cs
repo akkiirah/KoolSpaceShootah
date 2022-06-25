@@ -11,6 +11,7 @@ namespace KoolSpaceShootah
         protected float normalSpeed;
         protected float halfSpeed;
 
+        protected float timer = 2;
         protected int id;
         protected float damage;
         protected float health;
@@ -22,9 +23,6 @@ namespace KoolSpaceShootah
         protected int screenWidth;
         protected int screenHeight;
         protected Random rand;
-        protected Rectangle hitbox;
-
-        List<Rectangle> projectiles = new List<Rectangle>();
 
         public Vector2 Position { get { return position; } }
         public float Damage { get { return damage; } }
@@ -39,13 +37,11 @@ namespace KoolSpaceShootah
 
         public virtual void Update(GameTime gameTime)
         {
-            hitbox.Location = new Point((int)Position.X, (int)Position.Y);
             deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             Input();
             Jitter();
             Move();
         }
-
 
         protected abstract void Input();
 
@@ -63,14 +59,20 @@ namespace KoolSpaceShootah
 
             this.sprite = _sprite;
             spriteBatch = new SpriteBatch(_graphicsDevice);
-
-            hitbox.Width = sprite.Width;
-            hitbox.Height = sprite.Height;
         }
 
-        public Projectile Shoot()
+        public bool Shoot()
         {
-            return new Projectile(id);
+            if (timer <= 0)
+            {
+                timer = 2;
+                return true;
+            }
+            else
+            {
+                timer -= deltaTime;
+                return false;
+            }
         }
 
 
@@ -92,7 +94,7 @@ namespace KoolSpaceShootah
         /// Randomly shakes entities around
         /// Position has to be an int, otherwise sprite would flicker
         /// </summary>
-        protected void Jitter()
+        protected virtual void Jitter()
         {
             int jitX = rand.Next(-1, 2);
             int jitY = rand.Next(-1, 2);

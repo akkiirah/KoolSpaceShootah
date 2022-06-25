@@ -22,14 +22,12 @@ namespace KoolSpaceShootah
 
         protected override void Input()
         {
-            if(owner == 0)
-            {
-                hitbox.Location = new Point(hitbox.Location.X, (int)(hitbox.Location.Y - (1 * deltaTime)));
-            }
-            else
-            {
-                hitbox.Location = new Point(hitbox.Location.X, (int)(hitbox.Location.Y + (1 * deltaTime)));
-            }
+            position.X -= 1;
+        }
+
+        protected override void Jitter()
+        {
+
         }
     }
 }

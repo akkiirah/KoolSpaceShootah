@@ -16,8 +16,9 @@ namespace KoolSpaceShootah
         Enemy[] enemies;
         IEntity[] entities;
 
-        List<Rectangle> projectiles = new List<Rectangle>();
+        List<Projectile> projectiles = new List<Projectile>();
 
+        Texture2D projectileSprite;
         Texture2D playerSprite;
         Texture2D enemySprite;
 
@@ -84,6 +85,11 @@ namespace KoolSpaceShootah
                     {
                         if (entity != null) { entity.Initialize(); }
                     }
+
+                    foreach (var projectile in projectiles)
+                    {
+                        if(projectile != null) { projectile.Initialize(); }
+                    }
                     break;
             }
             base.Initialize();
@@ -104,6 +110,7 @@ namespace KoolSpaceShootah
                 case GameState.Ingame:
                     playerSprite = Content.Load<Texture2D>("player");
                     enemySprite = Content.Load<Texture2D>("enemy1");
+                    projectileSprite = Content.Load<Texture2D>("projectile");
 
                     entities[0].LoadContent(playerSprite,
                     GraphicsDevice,
@@ -122,6 +129,18 @@ namespace KoolSpaceShootah
                         }
                         
                     }
+
+                    foreach (var projectile in projectiles)
+                    {
+                        if (projectile != null)
+                        {
+                            projectile.LoadContent(
+                            projectileSprite,
+                            GraphicsDevice,
+                            Window.ClientBounds.Width,
+                            Window.ClientBounds.Height);
+                        }
+                    }
                     break;
             }
         }
@@ -139,6 +158,7 @@ namespace KoolSpaceShootah
 
                     Array.Clear(entities, 0, entities.Length);
                     Array.Clear(enemies, 0, enemies.Length);
+                    projectiles.Clear();
                     player = null;
                     break;
 
@@ -178,8 +198,23 @@ namespace KoolSpaceShootah
                         if(entity != null) 
                         { 
                             entity.Update(gameTime);
-                            
-                                
+                        }
+                    }
+
+                    foreach (var enemy in enemies)
+                    {
+                        if (enemy != null && enemy.Shoot())
+                        {
+                            projectiles.Add( new Projectile(1) );
+                        }
+                    }
+
+
+                    foreach (var projectile in projectiles)
+                    {
+                        if (projectile != null)
+                        {
+                            projectile.Update(gameTime);
                         }
                     }
 
@@ -210,6 +245,8 @@ namespace KoolSpaceShootah
                     GraphicsDevice.Clear(Color.DarkGray);
                     foreach (var entity in entities)
                     { if (entity != null) { entity.Draw(time); }}
+                    foreach (var projectile in projectiles)
+                    { if (projectile != null) { projectile.Draw(time); }}
                     break;
             }
             base.Draw(time);

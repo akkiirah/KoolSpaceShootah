@@ -13,7 +13,7 @@ namespace KoolSpaceShootah
         { }
 
         /// <summary>
-        /// Initializes the player's variables and those from the AbstractEntity class
+        /// Initializes the players's variables and those from the AbstractEntity class
         /// </summary>
         public override void Initialize()
         {
