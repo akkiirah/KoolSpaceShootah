@@ -7,6 +7,8 @@ namespace KoolSpaceShootah
     {
         public override void Initialize()
         {
+            health = 100;
+            damage = 1;
             normalSpeed = 180f;
             base.Initialize();
         }

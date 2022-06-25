@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System.Diagnostics;
 
 namespace KoolSpaceShootah
 {
@@ -16,12 +17,14 @@ namespace KoolSpaceShootah
         /// </summary>
         public override void Initialize()
         {
+            health = 100;
+            id = 0;
             normalSpeed = 180f;
             base.Initialize();
         }
 
         public override void Update(GameTime gameTime)
-        { base.Update(gameTime); }
+        { base.Update(gameTime); Debug.WriteLine(Health); }
 
         public override void Draw(GameTime time)
         { base.Draw(time); }
@@ -47,7 +50,7 @@ namespace KoolSpaceShootah
             { position.Y += speedMod; }
 
             base.Move();
-        }
+        }   
 
         public override void LoadContent(Texture2D _sprite, GraphicsDevice _graphicsDevice, int _width, int _height)
         {

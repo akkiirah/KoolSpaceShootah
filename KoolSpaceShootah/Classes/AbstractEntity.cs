@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using System;
 
 namespace KoolSpaceShootah
@@ -10,6 +11,9 @@ namespace KoolSpaceShootah
         protected float normalSpeed;
         protected float halfSpeed;
 
+        protected int id;
+        protected float damage;
+        protected float health;
         protected Vector2 position;
         protected Texture2D sprite;
         private SpriteBatch spriteBatch;
@@ -18,8 +22,13 @@ namespace KoolSpaceShootah
         protected int screenWidth;
         protected int screenHeight;
         protected Random rand;
+        protected Rectangle hitbox;
+
+        List<Rectangle> projectiles = new List<Rectangle>();
 
         public Vector2 Position { get { return position; } }
+        public float Damage { get { return damage; } }
+        public float Health { get { return health; } }
 
         public virtual void Initialize()
         {
@@ -30,6 +39,7 @@ namespace KoolSpaceShootah
 
         public virtual void Update(GameTime gameTime)
         {
+            hitbox.Location = new Point((int)Position.X, (int)Position.Y);
             deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
             Input();
             Jitter();
@@ -53,7 +63,16 @@ namespace KoolSpaceShootah
 
             this.sprite = _sprite;
             spriteBatch = new SpriteBatch(_graphicsDevice);
+
+            hitbox.Width = sprite.Width;
+            hitbox.Height = sprite.Height;
         }
+
+        public Projectile Shoot()
+        {
+            return new Projectile(id);
+        }
+
 
         protected virtual void Move()
         {

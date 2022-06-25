@@ -6,6 +6,8 @@ namespace KoolSpaceShootah
     interface IEntity
     {
         Vector2 Position { get; }
+        float Health { get; }
+        float Damage { get; }
 
         void Initialize();
         void Update(GameTime gameTime);

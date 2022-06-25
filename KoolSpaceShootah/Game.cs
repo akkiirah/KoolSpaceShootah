@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
-using System.Diagnostics;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace KoolSpaceShootah
@@ -15,6 +15,8 @@ namespace KoolSpaceShootah
         Player player;
         Enemy[] enemies;
         IEntity[] entities;
+
+        List<Rectangle> projectiles = new List<Rectangle>();
 
         Texture2D playerSprite;
         Texture2D enemySprite;
@@ -152,7 +154,6 @@ namespace KoolSpaceShootah
         /// </summary>
         protected override void Update(GameTime gameTime)
         {
-            Debug.WriteLine(1 / gameTime.ElapsedGameTime.TotalSeconds);
 
             if (menuManager.keyState.IsKeyDown(Keys.Escape))
             { this.Exit(); }
@@ -173,7 +174,14 @@ namespace KoolSpaceShootah
 
                 case GameState.Ingame:
                     foreach (var entity in entities)
-                    { if(entity != null) { entity.Update(gameTime); }}
+                    { 
+                        if(entity != null) 
+                        { 
+                            entity.Update(gameTime);
+                            
+                                
+                        }
+                    }
 
                     if (player.BackToMenu())
                     {
